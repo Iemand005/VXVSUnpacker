@@ -15,7 +15,19 @@ namespace VXVSUnpacker
 
             bool crack = true;
 
-            FileStream file = File.OpenRead("etron.vxvs");
+            string path;
+
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Enter the path of a .vxvs file:");
+                path = Console.ReadLine();
+            }
+            else path = args[0];
+
+            try
+            {
+                FileStream file = File.OpenRead(path);
+
 
             byte[] magic = new byte[8];
             file.Read(magic, 0, 4);
@@ -149,6 +161,14 @@ namespace VXVSUnpacker
                 {
                     Console.WriteLine("Invalid file.");
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to open file: %s", path);
+                Console.WriteLine(e.ToString());
+            }
+
+            Console.WriteLine("Done! Press enter to exit...");
             Console.ReadLine();
         }
     }
